@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<link rel="stylesheet" href="weather/stylesheet.css">
+
+<head>
+  <meta charset="utf-8">
+  <title>geolocation</title>
+  <style media="screen">
+    body, html {
+      height: 100%;
+      display: grid;
+      font-family: sans-serif;
+    }
+    main { /* thing to center */
+      margin: auto;
+      padding: 1em;
+      background-color: #eee;
+    }
+        button{
+      display: block;
+      font-size: 1em;
+    }
+    </style>
+</head>
+
+<body>
+  <main>
+    <button id="findLocation">Show my location</button>
+    <p id="status">No location yet</p>
+  </main>
+
+  <script type="text/javascript">
+  document.querySelector('#findLocation').addEventListener('click', geoLookUp, false)
+
+  function geoLookUp(){
+    const status = document.querySelector('#status')
+
+    function success(position){
+        const latitude = position.coords.latitude
+        const longitude = position.coords.longitude
+        status.textContent = `lat: ${latitude}, lon: ${longitude}`
+    }
+
+    function error(err){
+        status.textContent = `Unable to retrive your location. Error: ${err.code}. 4${err.message}`
+    }
+
+    if (!navigator.geolocation){
+      status.textContent = "Geolocation is not supported or allowed by your browser"
+    } else {
+      status.textContent = "Locating..."
+      navigator.geolocation.getCurrentPosition(success, error)
+    }
+  }
+
+
+
+
+  </script>
+</body>
+
+
+
+
+
+
+
+
+</html>
